@@ -5,6 +5,7 @@ function demo() {
   demo2();
   demo3();
   demo4();
+  demo111();
   return c;
 }
 
@@ -20,4 +21,8 @@ function demo3() {
 
 function demo4() {
 	return va;
+}
+
+function demo111() {
+  return 'lllllll';
 }

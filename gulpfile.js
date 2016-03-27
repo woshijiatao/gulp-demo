@@ -13,26 +13,26 @@ var reload = browserSync.reload;
 
 // Define custom task
 gulp.task('sass', function () {
-  return sass('src/scss/main.scss')
+  return sass('app/scss/main.scss')
     .on('error', sass.logError)
-    .pipe(gulp.dest('src/css'))
+    .pipe(gulp.dest('app/css'))
     .pipe(cleanCSS({compatibility: 'ie8'}))
     .pipe(rename({suffix: '.min'}))
     .pipe(gulp.dest('dist/styles'));
 });
 
 gulp.task('uglify', function() {
-  return gulp.src('src/scripts/*.js')
+  return gulp.src('app/scripts/*.js')
     .pipe(uglify())
     .pipe(gulp.dest('dist/scripts'));
 });
 
 gulp.task('watch', function() {
-  var watcher = gulp.watch('src/scripts/*.js', ['uglify'])
+  var watcher = gulp.watch('app/scripts/*.js', ['uglify'])
   watcher.on('change', function(event) {
     console.log('JS File ' + event.path + ' was ' + event.type + ', running tasks...');
   });
-  gulp.watch('src/scss/*.scss', ['sass'], function(event) {
+  gulp.watch('app/scss/*.scss', ['sass'], function(event) {
     console.log('SCSS File ' + event.path + ' was ' + event.type + ', running tasks...');
   });
 });
@@ -42,7 +42,7 @@ gulp.task('serve', ['sass', 'uglify'], function() {
     notify: false,
     port: 9000,
     server: {
-      baseDir: ['.tmp', 'src', 'src/pages'],
+      baseDir: ['.tmp', 'app', 'app/pages'],
       routes: {
         '/bower_components': 'bower_components'
       }
@@ -50,11 +50,11 @@ gulp.task('serve', ['sass', 'uglify'], function() {
   });
 
   gulp.watch([
-    'src/*.html',
+    'app/*.html',
     '.tmp/scripts/**/*.js',
-    'src/images/**/*'
+    'app/images/**/*'
   ]).on('change', reload);
 
-  gulp.watch('src/scss/*.scss', ['sass']);
-  gulp.watch('src/scripts/**/*.js', ['uglify']);
+  gulp.watch('app/scss/*.scss', ['sass']);
+  gulp.watch('app/scripts/*.js', ['uglify']);
 });
